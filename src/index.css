@@ -1,5 +1,5 @@
-@import "tailwindcss";
 @import url('./assets/Fonts/fonts.css');
+@import "tailwindcss";
 
 @theme {
   --font-playfair: "Playfair Display", serif;
