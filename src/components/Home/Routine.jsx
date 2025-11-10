@@ -55,7 +55,7 @@ export default function Routine() {
         {/* CTA Button */}
         <div className="flex justify-center mt-16 mb-20">
           <Link to={'/login'} 
-            className="px-8 py-4 uppercase bg-white border border-black font-['Montserrat'] text-lg font-medium hover:bg-gray-50 transition-all duration-300 transform hover:scale-105"
+            className="px-8 py-4 uppercase bg-white border border-black font-['Montserrat'] text-lg font-medium hover:bg-hoverBrandRed hover:text-brandWhite transition-all duration-300 transform hover:scale-105"
           >
             Je découvre ma routine idéale
           </Link>

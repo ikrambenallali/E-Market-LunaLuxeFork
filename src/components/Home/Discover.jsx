@@ -10,7 +10,7 @@ export default function Discover() {
           <div className="space-y-8">
             {/* Main Heading */}
             <h2 
-              className="text-3xl text-brandRed sm:text-4xl lg:text-5xl font-bold leading-tight"
+              className="text-3xl text-brandRed font-playfair sm:text-4xl lg:text-5xl font-bold leading-tight"
             >
               Discover the Difference Our Cosmetics Make
             </h2>

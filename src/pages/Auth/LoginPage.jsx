@@ -1,9 +1,34 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LoginImage from "../../assets/Images/login-image.png";
 import LoginHeader from "../../components/Layouts/LoginHeader"
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import API_ENDPOINTS from "../../config/api";
 
 export default function Login() {
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    setSuccess("");
+
+    try {
+      const response = await axios.post(API_ENDPOINTS.AUTH.LOGIN, {
+        email,
+        password,
+      });
+      setSuccess("Login successful!");
+      navigate('/test');
+    } catch (error) {
+      setError(error.response?.data?.message || "Login failed. Please try again.");
+    }
+  }
 
   // this use effect for hide the overflow for the login page!
   useEffect(() => {
@@ -46,27 +71,27 @@ export default function Login() {
           </h1>
 
           {/* Success Message */}
-          {/* {success && (
+          {success && (
           <div className="w-full max-w-md mb-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded">
             {success}
           </div>
-        )} */}
+        )}
 
           {/* Error Message */}
-          {/* {error && (
+          {error && (
           <div className="w-full max-w-md mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
             {error}
           </div>
-        )} */}
+        )}
 
-          <form className="w-full max-w-md">
+          <form className="w-full max-w-md font-montserrat" onSubmit={handleSubmit}>
             {/* Email Input */}
             <div className="mb-[34px]">
               <input
                 type="email"
                 placeholder="EMAIL"
                 onChange={(e) => setEmail(e.target.value)}
-                className="font-playfair placeholder:opacity-50 w-full p-3 border border-black focus:border-brandRed focus:outline-none transition-colors bg-white text-brandBrown"
+                className=" placeholder:opacity-50 w-full p-3 border border-black focus:border-brandRed focus:outline-none transition-colors bg-white text-brandBrown"
                 required
               />
             </div>
@@ -77,26 +102,27 @@ export default function Login() {
                 type="password"
                 placeholder="PASSWORD"
                 onChange={(e) => setPassword(e.target.value)}
-                className="font-playfair placeholder:opacity-50 w-full p-3 border border-black focus:border-brandRed focus:outline-none transition-colors bg-white text-brandBrown"
+                className=" placeholder:opacity-50 w-full p-3 border border-black focus:border-brandRed focus:outline-none transition-colors bg-white text-brandBrown"
                 required
               />
             </div>
 
             {/* Login Button */}
             <div className="flex items-center mb-3">
-              <div className="grow border-t-2 border-brandRed"></div>
+              <div className="flex-1 h-px bg-gray-300"></div>
               <button
                 type="submit"
-                className="font-montserrat font-normal px-6 uppercase py-2 mx-4 text-lg text-white bg-brandRed hover:bg-brandBrown disabled:bg-gray-400 disabled:cursor-not-allowed cursor-pointer shadow-md transition-colors duration-300 whitespace-nowrap w-[320px]"
+                className="font-montserrat font-normal px-6 uppercase py-2 mx-4 text-lg text-brandWhite bg-brandRed hover:bg-brandBrown disabled:bg-gray-400 disabled:cursor-not-allowed cursor-pointer shadow-md transition-colors duration-300 whitespace-nowrap w-[320px]"
               >
                 Login
               </button>
-              <div className="grow border-t-2 border-brandRed"></div>
+              <div className="flex-1 h-px bg-gray-300"></div>
             </div>
+
 
             {/* Sign Up Link */}
             <div className="text-center">
-              <p className="font-playfair text-brandBrown">
+              <p className=" text-brandBrown">
                 Vous n'avez pas de compte ?{" "}
                 <Link
                   to="/signup"

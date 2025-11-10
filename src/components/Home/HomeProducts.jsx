@@ -18,11 +18,11 @@ function Product({ src }) {
         />
         
         <div 
-          className={`absolute inset-0 font-playfair bg-black/75 flex flex-col justify-between items-center p-6 text-white transition-all duration-500
+          className={`absolute inset-0 font-playfair bg-black/75 flex flex-col justify-between items-center p-6 text-brandWhite transition-all duration-500
             ${isHover ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'}`}
         >
           <div className="flex-1 flex flex-col justify-center text-center">
-            <span className="inline-block bg-brandRed text-white text-sm font-dm px-3 py-1 mb-3 mx-auto">
+            <span className="inline-block bg-brandRed text-brandWhite text-sm font-dm px-3 py-1 mb-3 mx-auto">
               -20% OFFER
             </span>
             <h3 className="text-2xl font-semibold mb-4">GLOW SERUM</h3>
@@ -31,7 +31,7 @@ function Product({ src }) {
             </p>
           </div>
           
-          <Link to={'/login'} className="text-center w-full bg-white cursor-pointer text-black py-3 font-dm text-base font-medium hover:bg-hoverBrandRed hover:text-white transition-all duration-300 transform hover:scale-105">
+          <Link to={'/login'} className="text-center w-full bg-white cursor-pointer text-black py-3 font-dm text-base font-medium hover:bg-hoverBrandRed hover:text-brandWhite transition-all duration-300 transform hover:scale-105">
             Add To Cart - $15.40
           </Link>
         </div>
@@ -56,7 +56,7 @@ export default function HomeProducts() {
       
       <div className="flex justify-center mt-12">
         <Link to={'/login'}
-         className="px-8 py-3 text-center cursor-pointer text-lg font-dm min-w-[200px] text-white bg-brandRed hover:bg-hoverBrandRed shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 uppercase tracking-wide">
+         className="px-8 py-3 text-center cursor-pointer text-lg font-dm min-w-[200px] text-brandWhite bg-brandRed hover:bg-hoverBrandRed shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 uppercase tracking-wide">
           Voir Plus
         </Link>
       </div>
