@@ -1,20 +1,21 @@
 import { useState, useEffect } from "react";
 import { EyeOff, Eye } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LoginImage from "../../assets/Images/login-image.png";
 import LoginHeader from "../../components/Layouts/LoginHeader";
+import axios from "axios";
+import { API_ENDPOINTS } from "../../config/api";
 
 export default function SignupPage() {
   const [formData, setFormData] = useState({
-    fullName: "",
+    fullname: "",
     email: "",
-    password: "",
-    confirmPassword: ""
+    password: ""
   });
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const navigate = useNavigate();
 
   // Hide overflow for the signup page
   useEffect(() => {
@@ -42,18 +43,66 @@ export default function SignupPage() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const validateForm = () => {
+
+    if (!formData.fullname || !formData.email || !formData.password) {
+      return "Veuillez remplir tous les champs.";
+    }
+    
+    if (formData.password.length < 8) {
+      return "Le mot de passe doit contenir au moins 8 caractères.";
+    }
+    
+    if (!/[A-Z]/.test(formData.password)) {
+      return "Le mot de passe doit contenir au moins une lettre majuscule.";
+    }
+
+    if (!/[a-z]/.test(formData.password)) {
+      return "Le mot de passe doit contenir au moins une lettre minuscule.";
+    }
+
+    return null;
+
+  }
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setSuccess("");
 
-    // Basic validation
-    if (formData.password !== formData.confirmPassword) {
-      setError("Les mots de passe ne correspondent pas");
+    const validationError = validateForm();
+    if (validationError) {
+      setError(validationError);
       return;
     }
 
-    // Add your signup logic here
+    try {
+      const response = await axios.post(API_ENDPOINTS.AUTH.SIGNUP, {
+        fullname: formData.fullname,
+        email: formData.email,
+        password: formData.password
+      });
+
+      console.log('response: ', response);
+      
+      if (response.data?.data?.token) {
+        localStorage.setItem('token', response.data.data.token);
+        console.log('token stored successfully');
+      }
+      
+      if (response.data?.data?.user) {
+        localStorage.setItem('user', JSON.stringify(response.data.data.user));
+        console.log('user stored successfully');
+      }
+
+      navigate("/client", { 
+        state: { message: "Compte créé avec succès! Veuillez vous connecter." }
+      });
+      setSuccess("Compte créé avec succès! Veuillez vous connecter.");
+    } catch (error) {
+      console.error('Registration error');
+    }
+
     console.log("Signup data:", formData);
   };
 
@@ -88,9 +137,9 @@ export default function SignupPage() {
               <div className="mb-6">
                 <input
                   type="text"
-                  name="fullName"
+                  name="fullname"
                   placeholder="Nom Et Prénom"
-                  value={formData.fullName}
+                  value={formData.fullname}
                   onChange={handleChange}
                   className="font-montserrat w-full px-4 py-3 border-2 border-black focus:border-brandRed focus:outline-none transition-colors bg-white text-gray-800"
                   required
@@ -132,25 +181,7 @@ export default function SignupPage() {
                   </button>
                 </div>
 
-                {/* Confirm Password */}
-                <div className="relative flex-1">
-                  <input
-                    type={showConfirmPassword ? "text" : "password"}
-                    name="confirmPassword"
-                    placeholder="Confirm Password"
-                    value={formData.confirmPassword}
-                    onChange={handleChange}
-                    className="font-montserrat w-full px-4 py-3 border-2 border-black focus:border-brandRed focus:outline-none transition-colors bg-white text-gray-800 pr-10"
-                    required
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-600 hover:text-brandRed transition-colors"
-                  >
-                    {showConfirmPassword ? <Eye size={20} /> : <EyeOff size={20} />}
-                  </button>
-                </div>
+   
               </div>
 
               {/* Register Button with decorative lines */}

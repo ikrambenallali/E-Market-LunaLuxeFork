@@ -4,14 +4,20 @@ import ProductsPage from "../pages/Products/ProductsPage";
 import NotFound from "../pages/Error/NotFound";
 import LoginPage from '../pages/Auth/LoginPage';
 import SignupPage from '../pages/Auth/SignupPage';
+import ClientDashboard from "../pages/Client/ClientDashboard";
+import ProtectedRoute from "../components/ProtectedRoute/ProtectedRoute";
 
 export default function RoutesList() {
+
+
+
     return (
         <Routes>
             <Route path="/" element={<IndexPage />} />
             <Route path="/products" element={<ProductsPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignupPage />} />
+            <Route path="/client" element={<ProtectedRoute><ClientDashboard /></ProtectedRoute>} />
 
             <Route path={'*'} element={<NotFound />} />
         </Routes>

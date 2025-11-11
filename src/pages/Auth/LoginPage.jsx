@@ -24,7 +24,19 @@ export default function Login() {
         password,
       });
       setSuccess("Login successful!");
-      navigate('/test');
+      console.log('response :', response);
+
+      if (response.data?.data?.token) {
+        localStorage.setItem('token', response.data.data.token);
+        console.log('token stored successfully');
+      }
+
+      if (response.data?.data?.user) {
+        localStorage.setItem('user', JSON.stringify(response.data.data.user));
+        console.log('user stored successfully');
+      }
+
+      navigate('/client');
     } catch (error) {
       setError(error.response?.data?.message || "Login failed. Please try again.");
     }

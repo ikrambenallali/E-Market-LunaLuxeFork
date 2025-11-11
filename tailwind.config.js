@@ -16,6 +16,7 @@ export default {
         brandSwhite: "#f1f1f1",
         brandWhite: "#fffaf9",
         l_black: "#1f1f1f",
+        hoverBrandRed: "#8B2D21",
       },
     },
   },
