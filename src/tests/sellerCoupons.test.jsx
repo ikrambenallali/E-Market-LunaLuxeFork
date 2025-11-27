@@ -23,7 +23,7 @@ const mockUseCreate = jest.fn(() => ({ mutate: jest.fn() }));
 const mockUseUpdate = jest.fn(() => ({ mutate: jest.fn() }));
 const mockUseDelete = jest.fn(() => ({ mutate: jest.fn() }));
 
-jest.mock('../Hooks/useCoupons', () => ({
+jest.mock('../hooks/useCoupons', () => ({
   useCoupons: (...args) => mockUseCoupons(...args),
   useCreateCoupon: () => mockUseCreate(),
   useUpdateCoupon: () => mockUseUpdate(),
