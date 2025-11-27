@@ -1,11 +1,19 @@
-import ClientMain from "../../components/Client/ClientMain";
-import NavBar from "../../components/Layouts/NavBar";
+import { Outlet } from "react-router-dom";
+import NavBar from "../../components/NavBar";
+import Products from "../../components/Client/Products";
+import MyOrders from "../../pages/Client/MyOrders";
+import { useCart } from "../../hooks/useCart";
 
 export default function ClientDashboard() {
-    return (
-        <div className="">
+    // Charger le panier au montage du composant
+    const user = JSON.parse(localStorage.getItem("user"));
+    const userId = user?.id || user?._id;
+    useCart(userId);
 
-            <ClientMain />
+    return (
+        <div>
+            <Products />
+            <Outlet />
         </div>
     );
 }
